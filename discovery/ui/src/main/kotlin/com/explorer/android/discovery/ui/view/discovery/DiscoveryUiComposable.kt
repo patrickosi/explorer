@@ -43,13 +43,12 @@ fun DiscoveryUiComposer(
         factory = component.viewModelFactory()
     )
     val state by viewModel.state.observeAsState()
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Toolbar {
+        DiscoveryUiHeader {
             AdvertiserUiComposable(
                 component.builder(AdvertiserUiBuilder::class.java)
                     .build(LocalContext.current,
@@ -87,7 +86,7 @@ fun DiscoveryUiComposer(
 }
 
 @Composable
-fun Toolbar(content: @Composable () -> Unit) {
+fun DiscoveryUiHeader(content: @Composable () -> Unit) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
