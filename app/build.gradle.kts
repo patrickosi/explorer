@@ -53,4 +53,11 @@ dependencies {
 
     implementation(libs.dagger.android)
     ksp(libs.dagger.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.test)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlinx.test.coroutines)
+    testImplementation(libs.mockk)
+    testImplementation(libs.mockk.jvm)
 }
