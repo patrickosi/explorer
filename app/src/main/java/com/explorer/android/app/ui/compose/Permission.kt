@@ -1,5 +1,6 @@
 package com.explorer.android.app.ui.compose
 
+import android.content.Context
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,15 +21,12 @@ fun Permissions(
     onGranted: () -> Unit,
     onError: (deniedPermissions: List<String>) -> Unit
 ) {
+    if (permissions.isEmpty()) {
+        onGranted()
+        return
+    }
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
-    val unGrantedPermissions by remember {
-        mutableStateOf(
-            permissions.filter {
-                context.checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED
-            }
-        )
-    }
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
     ) { result ->
@@ -39,21 +37,28 @@ fun Permissions(
             onError(deniedPermissions)
         }
     }
-    var hasPermission by remember { mutableStateOf(unGrantedPermissions.isNotEmpty()) }
-    DisposableEffect(unGrantedPermissions) {
+    val unGrantedPermissions = context.grantedPermissions(permissions)
+    var requirePermission by remember { mutableStateOf(unGrantedPermissions.isNotEmpty()) }
+    DisposableEffect(lifecycle) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
-                if (unGrantedPermissions.isNotEmpty() && hasPermission) {
-                    hasPermission = false
+                if (unGrantedPermissions.isNotEmpty() && requirePermission) {
+                    requirePermission = false
                     permissionLauncher.launch(unGrantedPermissions.toTypedArray())
                 } else if (unGrantedPermissions.isEmpty()) {
                     onGranted()
                 } else {
-                    hasPermission = true
+                    requirePermission = true
                 }
             }
         }
         lifecycle.addObserver(observer)
         onDispose { lifecycle.removeObserver(observer) }
+    }
+}
+
+private fun Context.grantedPermissions(permissions: List<String>): List<String> {
+    return permissions.filter { permission ->
+        permission.isNotEmpty() && checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED
     }
 }

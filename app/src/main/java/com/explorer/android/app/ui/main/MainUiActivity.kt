@@ -33,7 +33,6 @@ class MainUiActivity : ComponentActivity(), UiComponent.Provider<MainUi.Componen
                 component = injector,
                 viewModelStoreOwner = this,
                 permissions = permissions,
-                onGranted = { viewModel.initialize() },
                 onError = { openAppSettings() }
             )
         }

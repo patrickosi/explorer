@@ -24,23 +24,16 @@ import com.explorer.android.discovery.ui.view.discovery.DiscoveryUiComposer
 fun MainUiComposable(
     component: MainUi.Component,
     permissions: List<String>,
-    onGranted: () -> Unit,
     onError: (deniedPermissions: List<String>) -> Unit,
     viewModelStoreOwner: ViewModelStoreOwner
 ) {
     val error by rememberUpdatedState(onError)
-    val granted by rememberUpdatedState(onGranted)
     val viewModel = viewModel(
         modelClass = MainUiViewModel::class.java,
         viewModelStoreOwner = viewModelStoreOwner,
         factory = component.viewModelFactory()
     )
     val state = viewModel.state.observeAsState()
-    Permissions(
-        permissions = permissions,
-        onGranted = granted,
-        onError = error
-    )
     MainUiView {
         if (state.value == true) {
             DiscoveryUiComposer(
@@ -56,6 +49,11 @@ fun MainUiComposable(
             )
         }
     }
+    Permissions(
+        permissions = permissions,
+        onGranted = { viewModel.initialize() },
+        onError = error
+    )
 }
 
 @Composable
