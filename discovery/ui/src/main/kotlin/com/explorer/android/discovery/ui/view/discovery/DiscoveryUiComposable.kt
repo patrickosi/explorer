@@ -30,7 +30,6 @@ import com.explorer.android.discovery.ui.view.advertiser.AdvertiserUiParam
 import com.explorer.android.discovery.ui.view.consumer.ConsumerUiBuilder
 import com.explorer.android.discovery.ui.view.consumer.ConsumerUiComposable
 import com.explorer.android.discovery.ui.viewmodel.ConsumerViewModel
-import java.util.UUID
 
 @Composable
 fun DiscoveryUiComposer(
@@ -52,7 +51,7 @@ fun DiscoveryUiComposer(
             AdvertiserUiComposable(
                 component.builder(AdvertiserUiBuilder::class.java)
                     .build(LocalContext.current,
-                        AdvertiserUiParam(UUID.randomUUID().toString())),
+                        AdvertiserUiParam("@conxtantyn")),
                 viewModelStoreOwner
             )
         }

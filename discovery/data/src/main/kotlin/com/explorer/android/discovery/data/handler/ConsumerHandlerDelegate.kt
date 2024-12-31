@@ -12,6 +12,8 @@ import javax.inject.Singleton
 
 @Singleton
 class ConsumerHandlerDelegate  @Inject constructor() : ConsumerHandler, ConsumerDatasource.Listener {
+    private val users = ConcurrentHashMap.newKeySet<String>()
+
     private val deviceList = ConcurrentHashMap.newKeySet<Device>()
 
     private val status = MutableSharedFlow<Status>(replay = RELAY).apply { tryEmit(Status.Idle) }
@@ -27,7 +29,8 @@ class ConsumerHandlerDelegate  @Inject constructor() : ConsumerHandler, Consumer
     override fun devices(): SharedFlow<List<Device>> = devices
 
     override fun onDiscover(device: Device) {
-        if (deviceList.add(device)) {
+        if (users.add(device.name)) {
+            deviceList.add(device)
             devices.tryEmit(deviceList.toList())
         }
     }
@@ -37,6 +40,7 @@ class ConsumerHandlerDelegate  @Inject constructor() : ConsumerHandler, Consumer
     }
 
     override fun reset() {
+        users.clear()
         deviceList.clear()
         devices.tryEmit(deviceList.toList())
         status.tryEmit(Status.Idle)

@@ -44,7 +44,7 @@ fun AdvertiserUiComposable(
                     if (state?.loading == true) {
                         viewModel.stop() // Stop advertising
                     } else {
-                        viewModel.start("UniqueIdentifier") // Start advertising
+                        viewModel.start(component.param().identifier) // Start advertising
                     }
                 }
             ) {
