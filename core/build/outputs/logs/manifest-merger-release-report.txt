@@ -1,0 +1,16 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/constantine/Projects/Explorer/core/build/intermediates/tmp/ProcessLibraryManifest/release/tempAndroidManifest662746179546086833.xml:2:13-83
+INJECTED from /Users/constantine/Projects/Explorer/core/build/intermediates/tmp/ProcessLibraryManifest/release/tempAndroidManifest662746179546086833.xml:2:13-83
+	package
+		INJECTED from /Users/constantine/Projects/Explorer/core/build/intermediates/tmp/ProcessLibraryManifest/release/tempAndroidManifest662746179546086833.xml
+	xmlns:android
+		ADDED from /Users/constantine/Projects/Explorer/core/build/intermediates/tmp/ProcessLibraryManifest/release/tempAndroidManifest662746179546086833.xml:2:23-81
+uses-sdk
+INJECTED from /Users/constantine/Projects/Explorer/core/build/intermediates/tmp/ProcessLibraryManifest/release/tempAndroidManifest662746179546086833.xml reason: use-sdk injection requested
+INJECTED from /Users/constantine/Projects/Explorer/core/build/intermediates/tmp/ProcessLibraryManifest/release/tempAndroidManifest662746179546086833.xml
+INJECTED from /Users/constantine/Projects/Explorer/core/build/intermediates/tmp/ProcessLibraryManifest/release/tempAndroidManifest662746179546086833.xml
+	android:targetSdkVersion
+		INJECTED from /Users/constantine/Projects/Explorer/core/build/intermediates/tmp/ProcessLibraryManifest/release/tempAndroidManifest662746179546086833.xml
+	android:minSdkVersion
+		INJECTED from /Users/constantine/Projects/Explorer/core/build/intermediates/tmp/ProcessLibraryManifest/release/tempAndroidManifest662746179546086833.xml

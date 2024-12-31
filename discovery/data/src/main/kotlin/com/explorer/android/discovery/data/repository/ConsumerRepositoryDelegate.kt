@@ -12,9 +12,9 @@ class ConsumerRepositoryDelegate @Inject constructor(
     private val handler: ConsumerHandler,
     private val datasource: ConsumerDatasource,
 ) : ConsumerRepository {
-    override fun start() {
+    override fun start(identifier: String) {
         handler.onStart()
-        datasource.start()
+        datasource.start(identifier)
     }
 
     override fun status(): SharedFlow<Status> = handler.status()

@@ -13,8 +13,8 @@ class AdvertiserRepositoryDelegate @Inject constructor(
     private val datasource: AdvertiserDatasource,
 ) : AdvertiserRepository {
 
-    override fun start(identifier: String) {
-        datasource.start(identifier)
+    override fun start(identifier: String, name: String) {
+        datasource.start(identifier, name)
     }
 
     override fun status(): SharedFlow<Status> = handler.status()

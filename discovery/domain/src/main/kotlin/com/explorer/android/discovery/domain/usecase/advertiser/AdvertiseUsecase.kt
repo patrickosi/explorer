@@ -6,8 +6,13 @@ import javax.inject.Inject
 
 class AdvertiseUsecase @Inject constructor(
     private val repository: AdvertiserRepository
-) : SyncWithParamUsecase<String, Unit> {
-    override fun invoke(param: String) {
-        repository.start(param)
+) : SyncWithParamUsecase<AdvertiseUsecase.Param, Unit> {
+    override fun invoke(param: Param) {
+        repository.start(param.identifier, param.name)
     }
+
+    data class Param(
+        val identifier: String,
+        val name: String,
+    )
 }

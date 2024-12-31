@@ -8,6 +8,7 @@ import com.explorer.android.discovery.domain.usecase.search.NearbyDevicesUsecase
 import com.explorer.android.discovery.domain.usecase.search.ConsumerStatusUsecase
 import com.explorer.android.discovery.domain.usecase.search.ConsumerUsecase
 import com.explorer.android.discovery.domain.usecase.search.StopConsumerUsecase
+import com.explorer.android.discovery.ui.BuildConfig
 import com.explorer.android.discovery.ui.mapper.mapToUi
 import io.mockk.*
 import kotlinx.coroutines.Dispatchers
@@ -79,7 +80,7 @@ internal class ConsumerViewModelTest {
     fun `start invokes StartSearchUsecase`() = runTest {
         viewModel.start()
 
-        coVerify { consumerUsecase() }
+        coVerify { consumerUsecase(BuildConfig.UUID) }
     }
 
     @Test

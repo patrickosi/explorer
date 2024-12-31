@@ -10,6 +10,7 @@ import com.explorer.android.discovery.domain.usecase.search.NearbyDevicesUsecase
 import com.explorer.android.discovery.domain.usecase.search.ConsumerStatusUsecase
 import com.explorer.android.discovery.domain.usecase.search.ConsumerUsecase
 import com.explorer.android.discovery.domain.usecase.search.StopConsumerUsecase
+import com.explorer.android.discovery.ui.BuildConfig
 import com.explorer.android.discovery.ui.mapper.mapToUi
 import com.explorer.android.discovery.ui.model.UiDevice
 import kotlinx.coroutines.flow.collectLatest
@@ -46,7 +47,7 @@ class ConsumerViewModel @Inject constructor(
     }
 
     fun start() {
-        viewModelScope.launch { consumerUsecase() }
+        viewModelScope.launch { consumerUsecase(BuildConfig.UUID) }
     }
 
     fun stop() {

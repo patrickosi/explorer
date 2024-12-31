@@ -8,6 +8,7 @@ import com.explorer.android.discovery.domain.usecase.advertiser.ConnectedDevices
 import com.explorer.android.discovery.domain.usecase.advertiser.AdvertStatusUsecase
 import com.explorer.android.discovery.domain.usecase.advertiser.AdvertiseUsecase
 import com.explorer.android.discovery.domain.usecase.advertiser.CancelAdvertiserUsecase
+import com.explorer.android.discovery.ui.BuildConfig
 import com.explorer.android.discovery.ui.mapper.mapToUi
 import io.mockk.every
 import io.mockk.mockk
@@ -75,11 +76,13 @@ internal class AdvertiserViewModelTest {
 
     @Test
     fun `start() updates correctly when status is emitted`() = runTest {
-        val identifier = "<test-identifier>"
+        val name = "<test-name>"
 
-        viewModel.start(identifier)
+        viewModel.start(name)
 
-        verify { advertiseUsecase(identifier) }
+        verify {
+            advertiseUsecase(AdvertiseUsecase.Param(BuildConfig.UUID, name))
+        }
     }
 
     @Test

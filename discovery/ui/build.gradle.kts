@@ -17,7 +17,7 @@ android {
     }
 
     defaultConfig {
-        buildConfigField("int", "ADVERTISING_TIMEOUT", "1000")
+        buildConfigField("String", "UUID", "\"0000180A-0000-1000-8000-00805F9B34FB\"")
     }
 }
 

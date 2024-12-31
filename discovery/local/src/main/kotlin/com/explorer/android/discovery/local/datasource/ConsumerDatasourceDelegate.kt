@@ -23,14 +23,14 @@ class ConsumerDatasourceDelegate @Inject constructor(
 ) : ScanCallback(), ConsumerDatasource {
     @Volatile private var started: Boolean = false
 
-    override fun start() {
+    override fun start(identifier: String) {
         if (started) {
             return
         }
         val scanSettings = factory.settings().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).build()
         val filters = listOf(
             factory.filter()
-                .setServiceUuid(ParcelUuid(UUID.fromString(BuildConfig.UUID)))
+                .setServiceUuid(ParcelUuid(UUID.fromString(identifier)))
                 .build()
         )
         manager.adapter.bluetoothLeScanner.startScan(filters, scanSettings, this)
@@ -42,10 +42,9 @@ class ConsumerDatasourceDelegate @Inject constructor(
     }
 
     private fun handleResult(result: ScanResult) {
-        val manufacturerData = result.scanRecord?.getManufacturerSpecificData(BuildConfig.MANUFACTURER)
-            ?: return
+        val name = result.scanRecord?.getManufacturerSpecificData(BuildConfig.MANUFACTURER) ?: return
         val device = Device(
-            name = String(manufacturerData),
+            name = String(name, Charsets.UTF_8),
             address = result.device.address
         )
         listener.onDiscover(device)

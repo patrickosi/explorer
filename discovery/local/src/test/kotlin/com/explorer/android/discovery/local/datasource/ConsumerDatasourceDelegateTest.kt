@@ -53,6 +53,7 @@ internal class ConsumerDatasourceDelegateTest {
 
     @Test
     fun `start() should begin scanning when not already started`() {
+        val identifier = "0000180A-0000-1000-8000-00805F9B34FB"
         val scanSettings = mockk<ScanSettings>()
         val filters = listOf(mockk<ScanFilter>())
 
@@ -62,7 +63,7 @@ internal class ConsumerDatasourceDelegateTest {
         every { filterBuilder.build() } returns filters.first()
         every { bluetoothLeScanner.startScan(any(), any(), any<ScanCallback>()) } returns Unit
 
-        adapter.start()
+        adapter.start(identifier)
 
         verify { bluetoothLeScanner.startScan(filters, scanSettings, any<ScanCallback>()) }
     }

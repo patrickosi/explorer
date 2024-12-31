@@ -37,7 +37,7 @@ internal class AdvertiserRepositoryDelegateTest {
         handler = discovery
         listener = discovery
         datasource = mockk(relaxed = true)
-        every { datasource.start(any()) } answers {
+        every { datasource.start(any(), any()) } answers {
             listener.onStart()
         }
         repository = AdvertiserRepositoryDelegate(handler, datasource)
@@ -46,18 +46,19 @@ internal class AdvertiserRepositoryDelegateTest {
     @Test
     fun `start() should update status to Active`() = runTest {
         val identifier = "<test-identifier>"
+        val name = "<test-name>"
 
-        repository.start(identifier)
+        repository.start(identifier, name)
 
         val status = repository.status().first()
 
         assertEquals(Status.Active, status)
-        coVerify { datasource.start(identifier) }
+        coVerify { datasource.start(identifier, name) }
     }
 
     @Test
     fun `stop() should update status to Idle`() = runTest {
-        repository.start("<test-identifier>")
+        repository.start("<test-identifier>", "<test-name>")
 
         repository.stop()
 

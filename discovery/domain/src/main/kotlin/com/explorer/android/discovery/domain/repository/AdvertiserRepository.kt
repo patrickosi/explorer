@@ -5,7 +5,7 @@ import com.explorer.android.discovery.domain.model.Status
 import kotlinx.coroutines.flow.SharedFlow
 
 interface AdvertiserRepository {
-    fun start(identifier: String)
+    fun start(identifier: String, name: String)
 
     fun status(): SharedFlow<Status>
 

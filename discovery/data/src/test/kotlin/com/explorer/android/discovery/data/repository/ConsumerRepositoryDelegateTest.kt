@@ -31,12 +31,13 @@ internal class ConsumerRepositoryDelegateTest {
 
     @Test
     fun `start() should set status to Active and start the datasource`() = runTest {
-        repository.start()
+        val identifier = "<test-identifier>"
+        repository.start(identifier)
 
         val status = repository.status().first()
         assertEquals(Status.Active, status)
 
-        verify { datasource.start() }
+        verify { datasource.start(identifier) }
     }
 
     @Test

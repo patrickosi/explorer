@@ -3,7 +3,7 @@ package com.explorer.android.discovery.data.datasource
 import com.explorer.android.discovery.domain.model.Device
 
 interface AdvertiserDatasource {
-    fun start(identifier: String)
+    fun start(identifier: String, name: String)
 
     fun devices(): List<Device>
 

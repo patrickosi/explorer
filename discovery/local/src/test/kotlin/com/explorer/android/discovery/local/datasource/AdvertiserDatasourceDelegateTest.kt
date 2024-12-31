@@ -54,12 +54,13 @@ internal class AdvertiserDatasourceDelegateTest {
 
     @Test
     fun `activate() should start advertising`() {
-        val identifier = "<test-identifier>"
+        val name = "<test-name>"
+        val identifier = "0000180A-0000-1000-8000-00805F9B34FB"
         val mockData = mockk<AdvertiseData>()
 
         every { bluetoothAdvertiser.startAdvertising(any(), any(), any()) } returns Unit
 
-        every { settings.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_BALANCED) } returns settings
+        every { settings.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY) } returns settings
         every { settings.setConnectable(BuildConfig.CONNECTABLE) } returns settings
         every { settings.setTimeout(AdvertiserDatasourceDelegate.TIMEOUT) } returns settings
         every { settings.setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_MEDIUM) } returns settings
@@ -69,18 +70,18 @@ internal class AdvertiserDatasourceDelegateTest {
         every { data.addManufacturerData(any(), any()) } returns data
         every { data.build() } returns mockData
 
-        adapter.start(identifier)
+        adapter.start(identifier, name)
 
         verify {
             bluetoothAdvertiser.startAdvertising(any(), any(), eq(callback))
 
-            settings.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_BALANCED)
+            settings.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
             settings.setConnectable(BuildConfig.CONNECTABLE)
             settings.setTimeout(AdvertiserDatasourceDelegate.TIMEOUT)
             settings.setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_MEDIUM)
 
             data.setIncludeDeviceName(AdvertiserDatasourceDelegate.INCLUDE_DEVICE_NAME)
-            data.addManufacturerData(BuildConfig.MANUFACTURER, identifier.toByteArray())
+            data.addManufacturerData(BuildConfig.MANUFACTURER, name.toByteArray(Charsets.UTF_8))
             data.addServiceUuid(any<ParcelUuid>())
             data.build()
         }

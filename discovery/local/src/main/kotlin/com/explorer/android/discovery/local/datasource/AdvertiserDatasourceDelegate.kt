@@ -25,24 +25,24 @@ class AdvertiserDatasourceDelegate @Inject constructor(
 ) : AdvertiseCallback(), AdvertiserDatasource {
     @Volatile private var started: Boolean = false
 
-    override fun start(identifier: String) {
+    override fun start(identifier: String, name: String) {
         if (started) {
             return
         }
-        startAdvertising(identifier)
+        startAdvertising(identifier, name)
     }
 
-    private fun startAdvertising(id: String) {
+    private fun startAdvertising(identifier: String, name: String) {
         val settings = factory.settings()
-            .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_BALANCED)
+            .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
             .setConnectable(BuildConfig.CONNECTABLE)
             .setTimeout(TIMEOUT)
-            .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_MEDIUM)
+            .setTxPowerLevel(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
             .build()
         val data = factory.data()
             .setIncludeDeviceName(INCLUDE_DEVICE_NAME)
-            .addServiceUuid(ParcelUuid(UUID.fromString(BuildConfig.UUID)))
-            .addManufacturerData(BuildConfig.MANUFACTURER, id.toByteArray())
+            .addServiceUuid(ParcelUuid(UUID.fromString(identifier)))
+            .addManufacturerData(BuildConfig.MANUFACTURER, name.toByteArray(Charsets.UTF_8))
             .build()
         manager.adapter.bluetoothLeAdvertiser.startAdvertising(settings,  data, this)
     }

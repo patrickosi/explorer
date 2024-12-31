@@ -10,6 +10,7 @@ import com.explorer.android.discovery.domain.usecase.advertiser.ConnectedDevices
 import com.explorer.android.discovery.domain.usecase.advertiser.AdvertStatusUsecase
 import com.explorer.android.discovery.domain.usecase.advertiser.AdvertiseUsecase
 import com.explorer.android.discovery.domain.usecase.advertiser.CancelAdvertiserUsecase
+import com.explorer.android.discovery.ui.BuildConfig
 import com.explorer.android.discovery.ui.mapper.mapToUi
 import com.explorer.android.discovery.ui.model.UiDevice
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,8 +49,10 @@ class AdvertiserViewModel @Inject constructor(
         }
     }
 
-    fun start(identifier: String) {
-        viewModelScope.launch { advertiseUsecase(identifier) }
+    fun start(name: String) {
+        viewModelScope.launch {
+            advertiseUsecase(AdvertiseUsecase.Param(BuildConfig.UUID, name))
+        }
     }
 
     fun devices() {
