@@ -20,15 +20,6 @@ fun DiscoveryUiComposable(
         factory.builder(DiscoveryUiBuilder::class.java)
             .build(context, DiscoveryUiParam(identifier))
     }
-    DiscoveryUiPage(component, viewModelStoreOwner)
-}
-
-@Composable
-fun DiscoveryUiPage(
-    component: DiscoveryUi.Component,
-    viewModelStoreOwner: ViewModelStoreOwner
-) {
-    val identifier = component.param().identifier
     if (identifier == null) {
         ConsumerUiComposable(component, viewModelStoreOwner)
     } else {
