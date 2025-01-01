@@ -15,6 +15,10 @@ interface UiBuilder {
         fun <T : UiBuilder> builder(clazz: Class<T>): T
     }
 
+    interface FactoryProvider {
+        fun factory(): Factory
+    }
+
     abstract class Component<P, C : P> : UiBuilder {
         abstract fun build(context: Context): C
     }

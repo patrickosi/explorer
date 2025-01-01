@@ -27,8 +27,6 @@ class AdvertiserViewModel @Inject constructor(
 ) : ViewModel() {
     private val devices = MutableStateFlow<List<UiDevice>>(emptyList())
 
-    private val error = MutableStateFlow<Throwable?>(null)
-
     private val mutableState = MutableLiveData<State>()
 
     val state: LiveData<State> = mutableState
@@ -38,12 +36,11 @@ class AdvertiserViewModel @Inject constructor(
             combine(
                 devices,
                 advertStatusUsecase(),
-                error,
-            ) { devices, status, error ->
+            ) { devices, status ->
                 State(
                     loading = status is Status.Active,
                     devices = devices,
-                    error = error
+                    error = (status as? Status.Error?)?.error
                 )
             }.collectLatest(mutableState::postValue)
         }

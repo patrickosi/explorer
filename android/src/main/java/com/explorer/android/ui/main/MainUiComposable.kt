@@ -10,16 +10,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.explorer.android.BuildConfig
 import com.explorer.android.ui.permission.Permissions
-import com.explorer.core.ui.extention.builder
 import com.explorer.core.ui.theme.UiTheme
-import com.explorer.discovery.ui.view.discovery.DiscoveryUiBuilder
-import com.explorer.discovery.ui.view.discovery.DiscoveryUiComposer
-import com.explorer.discovery.ui.view.discovery.DiscoveryUiParam
+import com.explorer.discovery.ui.view.discovery.DiscoveryUiProvider
+import java.util.UUID
 
 @Composable
 fun MainUiComposable(
@@ -35,13 +33,14 @@ fun MainUiComposable(
         factory = component.viewModelFactory()
     )
     val state = viewModel.state.observeAsState()
+    val identifier = if (BuildConfig.IS_ADVERTISER) {
+        UUID.randomUUID().toString().take(10)
+    } else {
+        null
+    }
     MainUiView {
         if (state.value == true) {
-            DiscoveryUiComposer(
-                component.builder(DiscoveryUiBuilder::class.java)
-                    .build(LocalContext.current, DiscoveryUiParam()),
-                viewModelStoreOwner
-            )
+            DiscoveryUiProvider(identifier, component, viewModelStoreOwner)
         } else {
             Text(
                 text = "Explorer",

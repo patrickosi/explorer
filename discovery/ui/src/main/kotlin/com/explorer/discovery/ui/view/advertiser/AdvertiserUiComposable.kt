@@ -4,19 +4,39 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.explorer.core.ui.base.UiBuilder
+import com.explorer.core.ui.extention.builder
 import com.explorer.discovery.ui.viewmodel.AdvertiserViewModel
+
+@Composable
+fun AdvertiserUiProvider(
+    identifier: String,
+    factory: UiBuilder.FactoryProvider,
+    viewModelStoreOwner: ViewModelStoreOwner
+) {
+    AdvertiserUiComposable(
+        factory.builder(AdvertiserUiBuilder::class.java)
+            .build(
+                LocalContext.current,
+                AdvertiserUiParam(identifier)),
+        viewModelStoreOwner
+    )
+}
 
 @Composable
 fun AdvertiserUiComposable(
@@ -42,14 +62,22 @@ fun AdvertiserUiComposable(
             Button(
                 onClick = {
                     if (state?.loading == true) {
-                        viewModel.stop() // Stop advertising
+                        viewModel.stop()
                     } else {
-                        viewModel.start(component.param().identifier) // Start advertising
+                        viewModel.start(component.param().identifier)
                     }
                 }
             ) {
                 Text(
                     text = if (state?.loading == true) "Go Offline" else "Go Online"
+                )
+            }
+            state?.error?.let { error ->
+                Text(
+                    text = "Error: ${error.message}",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
         }
