@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlin.reflect.KClass
 
-interface UiViewModelProvider {
+interface UiViewModel {
     fun viewModelFactory(): ViewModelProvider.Factory
 
     @MapKey

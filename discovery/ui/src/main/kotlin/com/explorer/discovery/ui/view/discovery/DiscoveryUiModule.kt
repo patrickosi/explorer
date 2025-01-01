@@ -3,7 +3,7 @@ package com.explorer.discovery.ui.view.discovery
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.explorer.core.ui.base.UiBuilder
-import com.explorer.core.ui.base.UiViewModelProvider
+import com.explorer.core.ui.base.UiViewModel
 import com.explorer.discovery.ui.view.advertiser.AdvertiserUiBuilder
 import com.explorer.discovery.ui.view.consumer.ConsumerUiBuilder
 import com.explorer.discovery.ui.viewmodel.ConsumerViewModel
@@ -16,12 +16,12 @@ import dagger.multibindings.IntoMap
 interface DiscoveryUiModule {
     @Binds
     @DiscoveryUi.Scope
-    fun factory(factory: UiViewModelProvider.Factory): ViewModelProvider.Factory
+    fun factory(factory: UiViewModel.Factory): ViewModelProvider.Factory
 
     @Binds
     @IntoMap
     @DiscoveryUi.Scope
-    @UiViewModelProvider.Bind(ConsumerViewModel::class)
+    @UiViewModel.Bind(ConsumerViewModel::class)
     fun viewModel(viewModel: ConsumerViewModel): ViewModel
 
     @Module

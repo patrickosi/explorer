@@ -2,7 +2,7 @@ package com.explorer.discovery.ui.view.advertiser
 
 import com.explorer.core.ui.base.UiComponent
 import com.explorer.core.ui.base.UiModule
-import com.explorer.core.ui.base.UiViewModelProvider
+import com.explorer.core.ui.base.UiViewModel
 import com.explorer.discovery.domain.repository.AdvertiserRepository
 import dagger.BindsInstance
 
@@ -18,7 +18,7 @@ interface AdvertiserUi {
         dependencies = [ AdvertiserUi::class ],
         modules = [ UiModule::class, AdvertiserUiModule::class ]
     )
-    interface Component : AdvertiserUi, UiComponent<AdvertiserUi>, UiViewModelProvider {
+    interface Component : AdvertiserUi, UiComponent, UiViewModel {
         @dagger.Component.Builder
         interface Builder {
             fun advertiserUi(advertiserUi: AdvertiserUi): Builder

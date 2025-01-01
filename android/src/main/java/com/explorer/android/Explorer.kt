@@ -47,5 +47,5 @@ interface Explorer {
             Provider::class,
         ]
     )
-    interface Component : Explorer, MainUi, UiComponent<ExplorerApplication>
+    interface Component : Explorer, MainUi, UiComponent.Android<ExplorerApplication>
 }

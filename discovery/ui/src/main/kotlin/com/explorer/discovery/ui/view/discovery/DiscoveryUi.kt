@@ -2,7 +2,7 @@ package com.explorer.discovery.ui.view.discovery
 
 import com.explorer.core.ui.base.UiComponent
 import com.explorer.core.ui.base.UiModule
-import com.explorer.core.ui.base.UiViewModelProvider
+import com.explorer.core.ui.base.UiViewModel
 import com.explorer.discovery.domain.repository.AdvertiserRepository
 import com.explorer.discovery.domain.repository.ConsumerRepository
 import com.explorer.discovery.ui.view.advertiser.AdvertiserUi
@@ -24,10 +24,10 @@ interface DiscoveryUi {
         modules = [ UiModule::class, DiscoveryUiModule::class ]
     )
     interface Component : DiscoveryUi,
-        UiComponent<DiscoveryUiInteractor>,
+        UiComponent,
         AdvertiserUi,
         ConsumerUi,
-        UiViewModelProvider {
+        UiViewModel {
         @dagger.Component.Builder
         interface Builder {
             fun discoveryUi(discoveryUi: DiscoveryUi): Builder

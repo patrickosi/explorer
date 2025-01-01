@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.explorer.core.ui.base.UiBuilder
 import com.explorer.core.ui.base.UiComponent
 import com.explorer.core.ui.base.UiModule
-import com.explorer.core.ui.base.UiViewModelProvider
+import com.explorer.core.ui.base.UiViewModel
 import com.explorer.discovery.domain.repository.AdvertiserRepository
 import com.explorer.discovery.domain.repository.ConsumerRepository
 import com.explorer.discovery.ui.view.discovery.DiscoveryUi
@@ -32,12 +32,12 @@ interface MainUi {
     interface Module {
         @Binds
         @Scope
-        fun factory(factory: UiViewModelProvider.Factory): ViewModelProvider.Factory
+        fun factory(factory: UiViewModel.Factory): ViewModelProvider.Factory
 
         @Binds
         @IntoMap
         @Scope
-        @UiViewModelProvider.Bind(MainUiViewModel::class)
+        @UiViewModel.Bind(MainUiViewModel::class)
         fun viewModel(viewModel: MainUiViewModel): ViewModel
     }
 
@@ -76,5 +76,5 @@ interface MainUi {
             Provider::class,
         ]
     )
-    interface Component : MainUi, UiComponent<MainUiActivity>, DiscoveryUi, UiViewModelProvider
+    interface Component : MainUi, UiComponent.Android<MainUiActivity>, DiscoveryUi, UiViewModel
 }

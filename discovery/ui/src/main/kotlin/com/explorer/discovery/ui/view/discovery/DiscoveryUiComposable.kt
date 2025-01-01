@@ -1,40 +1,41 @@
 package com.explorer.discovery.ui.view.discovery
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelStoreOwner
 import com.explorer.core.ui.base.UiBuilder
 import com.explorer.core.ui.extention.builder
-import com.explorer.discovery.ui.view.advertiser.AdvertiserUiProvider
-import com.explorer.discovery.ui.view.consumer.ConsumerUiProvider
+import com.explorer.discovery.ui.view.advertiser.AdvertiserUiComposable
+import com.explorer.discovery.ui.view.consumer.ConsumerUiComposable
 
 @Composable
-fun DiscoveryUiProvider(
+fun DiscoveryUiComposable(
     identifier: String?,
     factory: UiBuilder.FactoryProvider,
     viewModelStoreOwner: ViewModelStoreOwner
 ) {
-    DiscoveryUiComposer(
+    val context = LocalContext.current
+    val component = remember(identifier) {
         factory.builder(DiscoveryUiBuilder::class.java)
-            .build(LocalContext.current, DiscoveryUiParam(identifier)),
-        viewModelStoreOwner
-    )
+            .build(context, DiscoveryUiParam(identifier))
+    }
+    DiscoveryUiPage(component, viewModelStoreOwner)
 }
 
 @Composable
-fun DiscoveryUiComposer(
+fun DiscoveryUiPage(
     component: DiscoveryUi.Component,
     viewModelStoreOwner: ViewModelStoreOwner
 ) {
-    if (component.param().identifier == null) {
-        ConsumerUiProvider(component, viewModelStoreOwner)
+    val identifier = component.param().identifier
+    if (identifier == null) {
+        ConsumerUiComposable(component, viewModelStoreOwner)
     } else {
-        AdvertiserUiProvider(
-            component.param().identifier!!,
+        AdvertiserUiComposable(
+            identifier,
             component,
             viewModelStoreOwner
         )
     }
 }
-
-

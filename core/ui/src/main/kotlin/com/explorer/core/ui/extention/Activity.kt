@@ -7,6 +7,6 @@ import kotlin.reflect.KClass
 
 fun <T : UiBuilder> Activity.findBuilder(clazz: KClass<T>): T {
     val dependency = application as UiComponent.Provider<*>
-    return (dependency.injector as UiComponent<*>).factory()
+    return (dependency.injector as UiComponent).factory()
         .builder(clazz.java)
 }

@@ -2,7 +2,7 @@ package com.explorer.discovery.ui.view.consumer
 
 import com.explorer.core.ui.base.UiComponent
 import com.explorer.core.ui.base.UiModule
-import com.explorer.core.ui.base.UiViewModelProvider
+import com.explorer.core.ui.base.UiViewModel
 import com.explorer.discovery.domain.repository.ConsumerRepository
 
 interface ConsumerUi {
@@ -17,5 +17,5 @@ interface ConsumerUi {
         dependencies = [ ConsumerUi::class ],
         modules = [ UiModule::class, ConsumerUiModule::class ]
     )
-    interface Component : ConsumerUi, UiComponent<ConsumerUi>, UiViewModelProvider
+    interface Component : ConsumerUi, UiComponent, UiViewModel
 }

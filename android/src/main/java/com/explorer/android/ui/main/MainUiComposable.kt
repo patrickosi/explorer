@@ -16,7 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.explorer.android.BuildConfig
 import com.explorer.android.ui.permission.Permissions
 import com.explorer.core.ui.theme.UiTheme
-import com.explorer.discovery.ui.view.discovery.DiscoveryUiProvider
+import com.explorer.discovery.ui.view.discovery.DiscoveryUiComposable
 import java.util.UUID
 
 @Composable
@@ -40,7 +40,7 @@ fun MainUiComposable(
     }
     MainUiView {
         if (state.value == true) {
-            DiscoveryUiProvider(identifier, component, viewModelStoreOwner)
+            DiscoveryUiComposable(identifier, component, viewModelStoreOwner)
         } else {
             Text(
                 text = "Explorer",
