@@ -23,4 +23,4 @@ include(":discovery:data")
 include(":discovery:local")
 include(":discovery:ui")
 
-include(":app")
+include(":android")

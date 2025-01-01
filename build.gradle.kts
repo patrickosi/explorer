@@ -7,7 +7,7 @@ plugins {
 }
 
 subprojects {
-    ext.set("android", listOf(":app"))
+    ext.set("android", listOf(":android"))
     beforeEvaluate {
         project(path) {
             apply("$rootDir/gradle/common.gradle")
